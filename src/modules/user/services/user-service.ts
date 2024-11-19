@@ -1,4 +1,4 @@
-import knex from "knex";
+import { knex } from '../../../db';
 import { CreateUserDTO } from "../dtos/create-user-dto";
 import { User } from "../entities/User";
 import { randomUUID } from "crypto";
@@ -8,7 +8,7 @@ class UserService {
     async create({ name, email, password }: CreateUserDTO): Promise<User> {
 
         const user = await knex('users').insert({
-            id: randomUUID,
+            id: randomUUID(),
             name,
             email,
             password
