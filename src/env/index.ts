@@ -1,5 +1,3 @@
-// import { config } from 'dotenv';
-//import 'dotenv/config';
 import dotenv from 'dotenv';
 
 import { z } from 'zod';

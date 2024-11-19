@@ -13,8 +13,8 @@ describe('Books routes', () => {
   });
 
   beforeEach(() => {
-    execSync('yarn knex migrate:rollback --all');
-    execSync('yarn knex migrate:latest');
+    execSync('knex migrate:rollback --all');
+    execSync('knex migrate:latest');
   });
 
   it('should be able to create a new book', async () => {
@@ -85,6 +85,8 @@ describe('Books routes', () => {
 
     expect(getBookResponse.body.book).toEqual(expect.objectContaining(book));
   });
+
   it.todo('should be able to edit a specific book', () => {});
+
   it.todo('should be able to delete a specific book', () => {});
 });
