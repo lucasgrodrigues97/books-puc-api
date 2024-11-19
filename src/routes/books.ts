@@ -4,18 +4,6 @@ import { z } from 'zod';
 import { randomUUID } from 'crypto';
 import { checkSessionId } from '../middlewares/check-session-id';
 
-// http
-
-// controller
-// service
-// repository
-
-// SOLID
-
-// unit
-// integration
-// e2e
-
 export async function booksRouter(app: FastifyInstance) {
 
   app.get(
