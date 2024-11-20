@@ -33,8 +33,8 @@ Além disso, é necessário escrever **testes** para ambos os endpoints, garanti
 Primeiro, clone o repositório do projeto:
 
 ```bash
-git clone https://github.com/CampossCaio/puc-minas.git
-cd puc-minas/nodejs/classes/api-rest-nodejs
+git clone https://github.com/lucasgrodrigues97/puc-api.git
+cd puc-api
 ```
 ### 2. Instalar as Dependências
 
