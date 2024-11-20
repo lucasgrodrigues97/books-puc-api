@@ -1,20 +1,26 @@
-import { knex } from '../../../db';
 import { CreateUserDTO } from "../dtos/create-user-dto";
+import { IUserRepository } from '../interfaces/IUserRepository';
 import { User } from "../entities/User";
-import { randomUUID } from "crypto";
+import bcrypt from 'bcrypt';
+
+const SALT_ROUNDS = 10;
 
 class UserService {
 
+    constructor(private userRepository: IUserRepository) {}
+
     async create({ name, email, password }: CreateUserDTO): Promise<User> {
 
-        const user = await knex('users').insert({
-            id: randomUUID(),
-            name,
-            email,
-            password
-        }).returning(['id', 'name', 'email', 'created_at']);
+        const checkUserExists = await this.userRepository.findByEmail(email);
 
-        return user[0] as User;
+        if (checkUserExists) {
+
+            throw new Error('Email already in use');
+        }
+
+        const hash = await bcrypt.hash(password, SALT_ROUNDS);
+
+        return await this.userRepository.create({ name, email, password: hash});
     }
 }
 

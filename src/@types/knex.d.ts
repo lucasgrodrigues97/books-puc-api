@@ -9,7 +9,6 @@ declare module 'knex/types/tables' {
       author: string;
       genrer: string;
       created_at: Date;
-      session_id?: string;
     };
   }
 
