@@ -71,11 +71,50 @@ export async function booksRouter(app: FastifyInstance) {
       return reply.status(201).send();
   });
 
-  app.put('/:id', () => {
-    // Implement PUT route for updating a book
+  app.put(
+    '/:id',
+    {
+      preHandler: [app.authenticate],
+    },
+    async (request, reply) => {
+      
+      const createBookBodySchema = z.object({
+        title: z.string(),
+        genrer: z.string(),
+        author: z.string(),
+      });
+
+      const { title, author, genrer } = createBookBodySchema.parse(request.body);
+
+      const getBookParamsSchema = z.object({
+        id: z.string().uuid(),
+      });
+
+      const { id } = getBookParamsSchema.parse(request.params);
+
+      const book = await knex('books')
+            .update({title, genrer, author})
+            .where({id})
+            .returning(['id', 'title', 'genrer', 'author']);
+
+      return reply.status(201).send(book);
   });
 
-  app.delete('/:id', () => {
-    // Implement DELETE route for deleting a book
+  app.delete(
+    '/:id',
+    {
+      preHandler: [app.authenticate],
+    },
+    async (request, reply) => {
+
+      const getBookParamsSchema = z.object({
+        id: z.string().uuid(),
+      });
+
+      const { id } = getBookParamsSchema.parse(request.params);
+
+      await knex('books').delete().where({id});
+
+      return reply.status(201).send({'Status': 'Successfully deleted'});
   });
 }
